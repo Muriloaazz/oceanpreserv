@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="src/assets/logo.png" type="image/png">
+  <title>OceanPreserv - Aquários</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #73D9CF;
+      min-height: 100vh;
+      position: relative;
+    }
+    
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 80%, rgba(53, 214, 237, 0.3) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(122, 229, 245, 0.3) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .navbar {
+      background: linear-gradient(to right, #35D6ED, #65DDEF, #7AE5F5);
+      padding: 15px 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    
+    .navbar-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    
+    .back-btn {
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .back-btn:hover {
+      background: rgba(255,255,255,0.3);
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .page-title {
+      text-align: center;
+      color: white;
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      animation: fadeInDown 1s ease;
+    }
+    
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .page-subtitle {
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+    
+    .aquarium-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .aquarium-card {
+      background: white;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    
+    .aquarium-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    
+    .aquarium-image {
+      height: 200px;
+      background:  #73D9CF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 64px;
+    }
+    
+    .aquarium-content {
+      padding: 25px;
+    }
+    
+    .aquarium-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    
+    .aquarium-description {
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .aquarium-features {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .feature-tag {
+      background:#73D9CF;
+      color: white;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+    
+    .visit-btn {
+      width: 100%;
+      background: #73D9CF;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 25px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .visit-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 219, 253, 0.4);
+    }
+    
+    .search-section {
+      margin: 40px 0;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .search-container {
+      position: relative;
+      max-width: 500px;
+      width: 100%;
+    }
+    
+    .search-container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: #73D9CF;
+      border-radius: 32px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .search-container:hover::before {
+      opacity: 1;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 22px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #73D9CF;
+      font-size: 20px;
+      z-index: 2;
+      transition: all 0.3s ease;
+    }
+    
+    .search-container:hover .search-icon {
+      color: #2BC5E0;
+      transform: translateY(-50%) scale(1.1);
+    }
+    
+    #stateSelect {
+      width: 100%;
+      padding: 18px 25px 18px 55px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      font-size: 17px;
+      font-weight: 500;
+      color: #333;
+      box-shadow: 
+        0 8px 32px rgba(0,0,0,0.15),
+        inset 0 1px 0 rgba(255,255,255,0.8);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+    }
+    
+    #stateSelect:focus {
+      outline: none;
+      background: white;
+      border-color: rgba(53, 214, 237, 0.6);
+      box-shadow: 
+        0 15px 40px rgba(0,0,0,0.25),
+        0 0 0 4px rgba(53, 214, 237, 0.2),
+        inset 0 1px 0 rgba(255,255,255,1);
+      transform: scale(1.05) translateY(-2px);
+    }
+    
+    .search-container::after {
+      content: '\f107';
+      font-family: 'Font Awesome 5 Free';
+      font-weight: 900;
+      position: absolute;
+      right: 25px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #73D9CF;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      font-size: 18px;
+    }
+    
+    .search-container:hover::after {
+      color: #73D9CF;
+      transform: translateY(-50%) rotate(180deg);
+    }
+    
+    .search-section {
+      margin: 40px 0;
+      display: flex;
+      justify-content: center;
+    }
+    
+    .search-container {
+      position: relative;
+      max-width: 500px;
+      width: 100%;
+    }
+    
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #73D9CF;
+      font-size: 18px;
+    }
+    
+    #searchInput {
+      width: 100%;
+      padding: 15px 20px 15px 50px;
+      border: none;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      font-size: 16px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+    
+    #searchInput:focus {
+      outline: none;
+      background: white;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      transform: scale(1.02);
+    }
+    
+    #searchInput::placeholder {
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+
+  <div class="container">
+    <h1 class="page-title">
+      <i class="fas fa-fish"></i> Localizações de Aquários
+    </h1>
+
+
+    <div class="search-section">
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <select id="stateSelect" onchange="selectState()">
+          <option value="">Selecione um estado...</option>
+          <option value="acre">Acre</option>
+          <option value="alagoas">Alagoas</option>
+          <option value="amapa">Amapá</option>
+          <option value="amazonas">Amazonas</option>
+          <option value="bahia">Bahia</option>
+          <option value="ceara">Ceará</option>
+          <option value="distrito-federal">Distrito Federal</option>
+          <option value="espirito-santo">Espírito Santo</option>
+          <option value="goias">Goiás</option>
+          <option value="maranhao">Maranhão</option>
+          <option value="mato-grosso">Mato Grosso</option>
+          <option value="mato-grosso-do-sul">Mato Grosso do Sul</option>
+          <option value="minas-gerais">Minas Gerais</option>
+          <option value="para">Pará</option>
+          <option value="paraiba">Paraíba</option>
+          <option value="parana">Paraná</option>
+          <option value="pernambuco">Pernambuco</option>
+          <option value="piaui">Piauí</option>
+          <option value="rio-de-janeiro">Rio de Janeiro</option>
+          <option value="rio-grande-do-norte">Rio Grande do Norte</option>
+          <option value="rio-grande-do-sul">Rio Grande do Sul</option>
+          <option value="rondonia">Rondônia</option>
+          <option value="roraima">Roraima</option>
+          <option value="santa-catarina">Santa Catarina</option>
+          <option value="sao-paulo">São Paulo</option>
+          <option value="sergipe">Sergipe</option>
+          <option value="tocantins">Tocantins</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="aquarium-grid" id="aquariumGrid">
+      <!-- Cards dos aquários serão adicionados aqui -->
+    </div>
+
+    <script>
+      function selectState() {
+        const select = document.getElementById('stateSelect');
+        const selectedState = select.value;
+        
+        if (selectedState) {
+          alert(`Você selecionou: ${select.options[select.selectedIndex].text}`);
+        }
+      }
+    </script>
+  </div>
+</body>
+</html>

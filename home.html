@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="src/assets/logo.png" type="image/png">
+  <title>OceanPreserv - Página Inicial</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    /* Reset e configurações básicas */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: url('src/assets/mar2.jpg') center/cover no-repeat fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-top: 80px;
+    }
+
+    /* Navbar */
+    .navbar-responsive {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: transparent;
+      backdrop-filter: blur(0px);
+      z-index: 1000;
+      padding: 15px 0;
+      transition: all 0.4s ease;
+    }
+
+    .navbar-responsive.scrolled {
+      background: rgba(0, 50, 80, 0.9);
+      backdrop-filter: blur(15px);
+      box-shadow: 0 4px 25px rgba(0, 50, 80, 0.3);
+    }
+
+    .navbar-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .navbar-brand {
+      font-size: 26px;
+      font-weight: bold;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      transition: all 0.4s ease;
+      cursor: pointer;
+      margin-right: 60px;
+    }
+
+    .navbar-brand:hover {
+      transform: scale(1.05);
+      filter: drop-shadow(0 0 10px rgba(53, 214, 237, 0.5));
+    }
+
+    .navbar-menu {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .navbar-item {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 12px 18px;
+      border-radius: 25px;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .navbar-item:hover {
+      background: linear-gradient(135deg, rgba(100, 200, 255, 0.3), rgba(50, 150, 255, 0.4));
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 8px 25px rgba(100, 200, 255, 0.3);
+    }
+
+    .navbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-left: auto;
+    }
+
+    .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .profile-icon:hover {
+      transform: scale(1.15);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .profile-icon i {
+      font-size: 16px;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: #35D6ED;
+      margin: 3px 0;
+      transition: 0.3s;
+      border-radius: 2px;
+    }
+
+    /* Menu lateral */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      left: -280px;
+      width: 280px;
+      height: 100%;
+      background: linear-gradient(to bottom, #35D6ED, #65DDEF);
+      z-index: 1000;
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+      transition: left 0.3s ease;
+      overflow-y: auto;
+    }
+
+    .side-menu.active {
+      left: 0;
+    }
+
+    .side-menu-header {
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .side-menu-close {
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .side-menu-items {
+      padding: 20px 0;
+    }
+
+    .side-menu-item {
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .side-menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .side-menu-item i {
+      font-size: 20px;
+      margin-right: 15px;
+      width: 24px;
+      text-align: center;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+      display: none;
+    }
+
+    /* Responsividade */
+    @media (max-width: 768px) {
+      .navbar-menu {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(15px);
+        flex-direction: column;
+        padding: 20px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .navbar-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .navbar-item {
+        width: 100%;
+        justify-content: center;
+        padding: 15px;
+        margin: 5px 0;
+        font-size: 16px;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .hamburger.active span:nth-child(1) {
+        transform: rotate(-45deg) translate(-5px, 6px);
+      }
+
+      .hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .hamburger.active span:nth-child(3) {
+        transform: rotate(45deg) translate(-5px, -6px);
+      }
+    }
+
+    /* Conteúdo principal */
+    .main-content {
+      padding: 40px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .welcome-section {
+      text-align: center;
+      color: white;
+      margin-bottom: 60px;
+    }
+
+    .welcome-section h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .welcome-section p {
+      font-size: 18px;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Overlay para menu lateral -->
+  <div class="overlay" id="overlay"></div>
+
+  <!-- Menu lateral -->
+  <div class="side-menu" id="sideMenu">
+    <div class="side-menu-header">
+      <h3 style="color: white;">Menu</h3>
+      <i class="fas fa-times side-menu-close" id="closeSideMenu"></i>
+    </div>
+    <div class="side-menu-items">
+      <a href="home.html" class="side-menu-item">
+        <i class="fas fa-home"></i>
+        <span>Início</span>
+      </a>
+      <a href="quizzes.html" class="side-menu-item">
+        <i class="fas fa-question-circle"></i>
+        <span>Quizzes</span>
+      </a>
+      <a href="dicas.html" class="side-menu-item">
+        <i class="fas fa-lightbulb"></i>
+        <span>Dicas</span>
+      </a>
+      <a href="aquarios.html" class="side-menu-item">
+        <i class="fas fa-fish"></i>
+        <span>Aquários</span>
+      </a>
+      <a href="cadeias.html" class="side-menu-item">
+        <i class="fas fa-link"></i>
+        <span>Cadeias Alimentares</span>
+      </a>
+      <a href="perfil.html" class="side-menu-item">
+        <i class="fas fa-user"></i>
+        <span>Perfil</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar-responsive" id="navbar">
+    <div class="navbar-container">
+      <div class="navbar-brand">OceanPreserv</div>
+      
+      <div class="navbar-menu" id="navbarMenu">
+        <a href="home.html" class="navbar-item">
+          <i class="fas fa-home"></i>
+          Início
+        </a>
+        <a href="quizzes.html" class="navbar-item">
+          <i class="fas fa-question-circle"></i>
+          Quizzes
+        </a>
+        <a href="dicas.html" class="navbar-item">
+          <i class="fas fa-lightbulb"></i>
+          Dicas
+        </a>
+        <a href="aquarios.html" class="navbar-item">
+          <i class="fas fa-fish"></i>
+          Aquários
+        </a>
+        <a href="cadeias.html" class="navbar-item">
+          <i class="fas fa-link"></i>
+          Cadeias
+        </a>
+      </div>
+
+      <div class="navbar-actions">
+        <div class="profile-icon" onclick="window.location.href='perfil.html'">
+          <i class="fas fa-user"></i>
+        </div>
+        <div class="hamburger" id="hamburger">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Conteúdo principal -->
+  <main class="main-content">
+    <section class="welcome-section">
+      <h1>Bem-vindo ao OceanPreserv</h1>
+      <p>Explore o fascinante mundo dos oceanos e aprenda sobre a importância da preservação marinha através de quizzes interativos, dicas práticas e conteúdo educativo.</p>
+    </section>
+  </main>
+
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', function() {
+      const navbar = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile menu toggle
+    const hamburger = document.getElementById('hamburger');
+    const navbarMenu = document.getElementById('navbarMenu');
+
+    hamburger.addEventListener('click', function() {
+      hamburger.classList.toggle('active');
+      navbarMenu.classList.toggle('active');
+    });
+
+    // Side menu functionality
+    const sideMenu = document.getElementById('sideMenu');
+    const overlay = document.getElementById('overlay');
+    const closeSideMenu = document.getElementById('closeSideMenu');
+
+    function openSideMenu() {
+      sideMenu.classList.add('active');
+      overlay.style.display = 'block';
+    }
+
+    function closeSideMenuFunc() {
+      sideMenu.classList.remove('active');
+      overlay.style.display = 'none';
+    }
+
+    closeSideMenu.addEventListener('click', closeSideMenuFunc);
+    overlay.addEventListener('click', closeSideMenuFunc);
+  </script>
+</body>
+</html>

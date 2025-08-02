@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="src/assets/logo.png" type="image/png">
+  <title>OceanPreserv - Dicas</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #03738C;
+      min-height: 100vh;
+    }
+    
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .page-title {
+      text-align: center;
+      color: white;
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .page-subtitle {
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      margin-bottom: 40px;
+      opacity: 0.9;
+    }
+    
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+    
+    .tip-card {
+      background: white;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tip-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    
+    .tip-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(135deg, #03738C, #73D9CF);
+    }
+    
+    .tip-icon {
+      font-size: 48px;
+      color: #73D9CF;
+      margin-bottom: 20px;
+    }
+    
+    .tip-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+    }
+    
+    .tip-description {
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .tip-steps {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 20px;
+    }
+    
+    .tip-steps li {
+      background: #FFF3E0;
+      margin-bottom: 10px;
+      padding: 10px 15px;
+      border-radius: 8px;
+      border-left: 3px solid #73D9CF;
+      font-size: 14px;
+    }
+    
+    .tip-impact {
+      background: linear-gradient(135deg, #03738C, #73D9CF);
+      color: white;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    
+    .difficulty-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: bold;
+      color: white;
+    }
+    
+    .easy { background: #27AE60; }
+    .medium { background: #73D9CF; }
+    .hard { background: #E74C3C; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="page-title">
+      <i class="fas fa-lightbulb"></i> Dicas de Preservação
+    </h1>
+    <p class="page-subtitle">Pequenas ações que fazem grande diferença para os oceanos</p>
+
+    <div class="tips-grid">
+      <div class="tip-card">
+        <span class="difficulty-badge easy">Fácil</span>
+        <div class="tip-icon">
+          <i class="fas fa-shopping-bag"></i>
+        </div>
+        <h3 class="tip-title">Reduza o Uso de Plástico</h3>
+        <p class="tip-description">Diminua drasticamente sua pegada plástica com mudanças simples no dia a dia.</p>
+        <ul class="tip-steps">
+          <li>Use sacolas reutilizáveis para compras</li>
+          <li>Prefira garrafas de água reutilizáveis</li>
+          <li>Evite canudos e utensílios descartáveis</li>
+          <li>Escolha produtos com menos embalagem</li>
+        </ul>
+        <div class="tip-impact">
+          <i class="fas fa-leaf"></i> Impacto: Reduz 80% do lixo plástico pessoal
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <span class="difficulty-badge easy">Fácil</span>
+        <div class="tip-icon">
+          <i class="fas fa-fish"></i>
+        </div>
+        <h3 class="tip-title">Consumo Consciente de Frutos do Mar</h3>
+        <p class="tip-description">Faça escolhas responsáveis ao consumir produtos marinhos.</p>
+        <ul class="tip-steps">
+          <li>Prefira peixes de pesca sustentável</li>
+          <li>Evite espécies ameaçadas de extinção</li>
+          <li>Consuma com moderação</li>
+          <li>Apoie pescadores locais responsáveis</li>
+        </ul>
+        <div class="tip-impact">
+          <i class="fas fa-shield-alt"></i> Impacto: Protege espécies marinhas
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <span class="difficulty-badge medium">Médio</span>
+        <div class="tip-icon">
+          <i class="fas fa-hands-helping"></i>
+        </div>
+        <h3 class="tip-title">Participe de Limpezas de Praia</h3>
+        <p class="tip-description">Engaje-se ativamente na preservação dos ambientes costeiros.</p>
+        <ul class="tip-steps">
+          <li>Procure grupos locais de voluntários</li>
+          <li>Organize limpezas com amigos</li>
+          <li>Documente o lixo coletado</li>
+          <li>Eduque outros sobre o problema</li>
+        </ul>
+        <div class="tip-impact">
+          <i class="fas fa-users"></i> Impacto: Mobiliza a comunidade
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <span class="difficulty-badge easy">Fácil</span>
+        <div class="tip-icon">
+          <i class="fas fa-tint"></i>
+        </div>
+        <h3 class="tip-title">Economize Água</h3>
+        <p class="tip-description">Preserve este recurso vital que conecta todos os ecossistemas.</p>
+        <ul class="tip-steps">
+          <li>Tome banhos mais curtos</li>
+          <li>Feche a torneira ao escovar os dentes</li>
+          <li>Conserte vazamentos rapidamente</li>
+          <li>Reutilize água quando possível</li>
+        </ul>
+        <div class="tip-impact">
+          <i class="fas fa-water"></i> Impacto: Preserva recursos hídricos
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <span class="difficulty-badge medium">Médio</span>
+        <div class="tip-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h3 class="tip-title">Eduque e Compartilhe</h3>
+        <p class="tip-description">Multiplique o conhecimento sobre preservação marinha.</p>
+        <ul class="tip-steps">
+          <li>Compartilhe informações nas redes sociais</li>
+          <li>Converse com família e amigos</li>
+          <li>Apoie organizações ambientais</li>
+          <li>Participe de eventos educativos</li>
+        </ul>
+        <div class="tip-impact">
+          <i class="fas fa-globe"></i> Impacto: Multiplica a conscientização
+        </div>
+      </div>
+
+      <div class="tip-card">
+        <span class="difficulty-badge hard">Avançado</span>
+        <div class="tip-icon">
+          <i class="fas fa-seedling"></i>
+        </div>
+        <h3 class="tip-title">Apoie Projetos de Conservação</h3>
+        <p class="tip-description">Contribua diretamente para iniciativas de preservação marinha.</p>
+        <ul class="tip-steps">
+          <li>Doe para ONGs ambientais</li>
+          <li>Adote um animal marinho</li>
+          <li>Participe de programas de voluntariado</li>
+          <li>Invista em empresas sustentáveis</li>
+        </ul>
+        <div class="tip-impact">
+          <i class="fas fa-heart"></i> Impacto: Financia a conservação
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

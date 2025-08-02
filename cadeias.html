@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="src/assets/logo.png" type="image/png">
+  <title>OceanPreserv - Cadeias Alimentares</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #03738C;
+      min-height: 100vh;
+    }
+    
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    .animals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+    
+    .animal-card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+    
+    .animal-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+    }
+    
+    .animal-image {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 0 auto 20px;
+      overflow: hidden;
+      border: 4px solid #73D9CF;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .animal-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    
+    .animal-card:hover .animal-image img {
+      transform: scale(1.1);
+    }
+    
+    .animal-card h3 {
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    
+    .animal-card p {
+      color: #666;
+      font-size: 16px;
+      margin: 0;
+    }
+    
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.8);
+    }
+    
+    .modal-content {
+      background-color: white;
+      margin: 5% auto;
+      padding: 30px;
+      border-radius: 20px;
+      width: 80%;
+      max-width: 600px;
+      position: relative;
+    }
+    
+    .close {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #999;
+    }
+    
+    .close:hover {
+      color: #333;
+    }
+    
+    #modal-title {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    
+    .food-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 15px 0;
+      padding: 15px;
+      border-radius: 25px;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .producer { background: linear-gradient(135deg, #27AE60, #2ECC71); }
+    .primary { background: linear-gradient(135deg, #F39C12, #E67E22); }
+    .secondary { background: linear-gradient(135deg, #E74C3C, #C0392B); }
+    .apex { background: linear-gradient(135deg, #73D9CF, #03738C); }
+    
+    .food-item i {
+      margin-right: 10px;
+      font-size: 20px;
+    }
+    
+    .arrow-down {
+      text-align: center;
+      font-size: 24px;
+      color: #03738C;
+      margin: 10px 0;
+    }
+    
+    #modal-description {
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      margin-top: 20px;
+      line-height: 1.6;
+    }
+    
+    .page-title {
+      text-align: center;
+      color: white;
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+    
+    .page-subtitle {
+      text-align: center;
+      color: white;
+      font-size: 18px;
+      margin-bottom: 50px;
+      opacity: 0.9;
+    }
+    
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="page-title">
+      <i class="fas fa-project-diagram"></i> Cadeias Alimentares Marinhas
+    </h1>
+    <p class="page-subtitle">Clique nos animais para descobrir suas cadeias alimentares</p>
+
+    <div class="animals-grid">
+      <div class="animal-card" onclick="showFoodChain('sardinha')">
+        <div class="animal-image">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&h=200&fit=crop&crop=center" alt="Sardinha">
+        </div>
+        <h3>Sardinha</h3>
+        <p>Peixe pequeno em cardumes</p>
+      </div>
+
+      <div class="animal-card" onclick="showFoodChain('shark')">
+        <div class="animal-image">
+          <img src="https://images.unsplash.com/photo-1560275619-4662e36fa65c?w=200&h=200&fit=crop&crop=center" alt="Tubarão Branco">
+        </div>
+        <h3>Tubarão Branco</h3>
+        <p>Predador apex dos oceanos</p>
+      </div>
+
+      <div class="animal-card" onclick="showFoodChain('dolphin')">
+        <div class="animal-image">
+          <img src="https://images.unsplash.com/photo-1607153333879-c174d265f1d2?w=200&h=200&fit=crop&crop=center" alt="Golfinho">
+        </div>
+        <h3>Golfinho</h3>
+        <p>Mamífero inteligente</p>
+      </div>
+
+      <div class="animal-card" onclick="showFoodChain('atum')">
+        <div class="animal-image">
+          <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=200&h=200&fit=crop&crop=center" alt="Atum">
+        </div>
+        <h3>Atum</h3>
+        <p>Predador veloz dos oceanos</p>
+      </div>
+
+      <div class="animal-card" onclick="showFoodChain('bacalhau')">
+        <div class="animal-image">
+          <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=200&h=200&fit=crop&crop=center" alt="Bacalhau">
+        </div>
+        <h3>Bacalhau</h3>
+        <p>Peixe de águas frias</p>
+      </div>
+
+      <div class="animal-card" onclick="showFoodChain('penguin')">
+        <div class="animal-image">
+          <img src="https://images.unsplash.com/photo-1551986782-d0169b3f8fa7?w=200&h=200&fit=crop&crop=center" alt="Pinguim">
+        </div>
+        <h3>Pinguim</h3>
+        <p>Ave aquática polar</p>
+      </div>
+    </div>
+
+    <div id="food-chain-modal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2 id="modal-title"></h2>
+        <div id="food-chain-display"></div>
+        <p id="modal-description"></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const foodChains = {
+      sardinha: {
+        title: 'Cadeia Alimentar da Sardinha',
+        chain: [
+          { name: 'Fitoplâncton', icon: 'fas fa-seedling', class: 'producer' },
+          { name: 'Zooplâncton', icon: 'fas fa-circle', class: 'primary' },
+          { name: 'Sardinha', icon: 'fas fa-fish', class: 'secondary' }
+        ],
+        description: 'Peixes pequenos que se alimentam de plâncton e formam grandes cardumes para se proteger de predadores.'
+      },
+      shark: {
+        title: 'Cadeia Alimentar do Tubarão Branco',
+        chain: [
+          { name: 'Algas', icon: 'fas fa-leaf', class: 'producer' },
+          { name: 'Peixes Pequenos', icon: 'fas fa-fish', class: 'primary' },
+          { name: 'Focas', icon: 'fas fa-fish', class: 'secondary' },
+          { name: 'Tubarão Branco', icon: 'fas fa-shark', class: 'apex' }
+        ],
+        description: 'O predador apex dos oceanos, no topo da cadeia alimentar marinha, essencial para manter o equilíbrio dos ecossistemas.'
+      },
+      dolphin: {
+        title: 'Cadeia Alimentar do Golfinho',
+        chain: [
+          { name: 'Fitoplâncton', icon: 'fas fa-seedling', class: 'producer' },
+          { name: 'Zooplâncton', icon: 'fas fa-circle', class: 'primary' },
+          { name: 'Sardinhas', icon: 'fas fa-fish', class: 'secondary' },
+          { name: 'Golfinho', icon: 'fas fa-fish', class: 'apex' }
+        ],
+        description: 'Mamíferos inteligentes que caçam em grupos coordenados, usando ecolocalização para encontrar suas presas.'
+      },
+      atum: {
+        title: 'Cadeia Alimentar do Atum',
+        chain: [
+          { name: 'Fitoplâncton', icon: 'fas fa-seedling', class: 'producer' },
+          { name: 'Peixes Pequenos', icon: 'fas fa-fish', class: 'primary' },
+          { name: 'Lulas', icon: 'fas fa-fish', class: 'secondary' },
+          { name: 'Atum', icon: 'fas fa-fish', class: 'apex' }
+        ],
+        description: 'Predador veloz que caça peixes menores e lulas, sendo um dos peixes mais rápidos dos oceanos.'
+      },
+      bacalhau: {
+        title: 'Cadeia Alimentar do Bacalhau',
+        chain: [
+          { name: 'Algas', icon: 'fas fa-leaf', class: 'producer' },
+          { name: 'Crustáceos', icon: 'fas fa-shrimp', class: 'primary' },
+          { name: 'Peixes Pequenos', icon: 'fas fa-fish', class: 'secondary' },
+          { name: 'Bacalhau', icon: 'fas fa-fish', class: 'apex' }
+        ],
+        description: 'Peixe de águas frias que se alimenta de crustáceos e peixes menores, importante na pesca comercial.'
+      },
+      penguin: {
+        title: 'Cadeia Alimentar do Pinguim',
+        chain: [
+          { name: 'Fitoplâncton', icon: 'fas fa-seedling', class: 'producer' },
+          { name: 'Krill', icon: 'fas fa-circle', class: 'primary' },
+          { name: 'Anchovas', icon: 'fas fa-fish', class: 'secondary' },
+          { name: 'Pinguim', icon: 'fas fa-fish', class: 'apex' }
+        ],
+        description: 'Aves aquáticas adaptadas para a vida nos oceanos gelados, excelentes nadadoras e mergulhadoras.'
+      }
+    };
+
+    function showFoodChain(animal) {
+      const data = foodChains[animal];
+      const modal = document.getElementById('food-chain-modal');
+      const title = document.getElementById('modal-title');
+      const display = document.getElementById('food-chain-display');
+      const description = document.getElementById('modal-description');
+
+      title.textContent = data.title;
+      description.textContent = data.description;
+
+      let chainHTML = '';
+      data.chain.forEach((item, index) => {
+        chainHTML += `
+          <div class="food-item ${item.class}">
+            <i class="${item.icon}"></i>
+            <span>${item.name}</span>
+          </div>
+        `;
+        if (index < data.chain.length - 1) {
+          chainHTML += '<div class="arrow-down"><i class="fas fa-arrow-down"></i></div>';
+        }
+      });
+
+      display.innerHTML = chainHTML;
+      modal.style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('food-chain-modal').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById('food-chain-modal');
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
